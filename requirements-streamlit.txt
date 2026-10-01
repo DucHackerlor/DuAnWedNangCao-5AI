@@ -1,0 +1,4 @@
+# Giao diện Streamlit chỉ gọi API → rất nhẹ, triển khai được trên Streamlit Community Cloud
+streamlit>=1.50
+requests
+pillow

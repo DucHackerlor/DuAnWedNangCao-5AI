@@ -1,0 +1,1 @@
+Copy TOAN BO noi dung cua thu muc patch vao thu muc project dang chay DuAnWedNangCao_beautiful va chon Replace. KHONG xoa artifacts, data/flowers, data/coco128 hay web/node_modules cu.

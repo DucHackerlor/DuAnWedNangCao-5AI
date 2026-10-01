@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "model_classes": "Food-101",
+    "unit": "kcal/100g",
+    "warning": "Các giá trị chỉ là ước tính phục vụ demo. Công thức, dầu, sốt và khẩu phần thực tế có thể làm calo thay đổi đáng kể."
+  },
+  "foods": {
+    "apple_pie": {
+      "name_vi": "Bánh táo",
+      "kcal_per_100g": 237
+    },
+    "baby_back_ribs": {
+      "name_vi": "Sườn nướng",
+      "kcal_per_100g": 292
+    },
+    "baklava": {
+      "name_vi": "Baklava",
+      "kcal_per_100g": 430
+    },
+    "beef_carpaccio": {
+      "name_vi": "Bò carpaccio",
+      "kcal_per_100g": 150
+    },
+    "beef_tartare": {
+      "name_vi": "Bò tartare",
+      "kcal_per_100g": 190
+    },
+    "beet_salad": {
+      "name_vi": "Salad củ dền",
+      "kcal_per_100g": 110
+    },
+    "beignets": {
+      "name_vi": "Bánh beignet",
+      "kcal_per_100g": 380
+    },
+    "bibimbap": {
+      "name_vi": "Cơm trộn Bibimbap",
+      "kcal_per_100g": 145
+    },
+    "bread_pudding": {
+      "name_vi": "Pudding bánh mì",
+      "kcal_per_100g": 230
+    },
+    "breakfast_burrito": {
+      "name_vi": "Burrito bữa sáng",
+      "kcal_per_100g": 210
+    },
+    "bruschetta": {
+      "name_vi": "Bruschetta",
+      "kcal_per_100g": 195
+    },
+    "caesar_salad": {
+      "name_vi": "Salad Caesar",
+      "kcal_per_100g": 170
+    },
+    "cannoli": {
+      "name_vi": "Cannoli",
+      "kcal_per_100g": 330
+    },
+    "caprese_salad": {
+      "name_vi": "Salad Caprese",
+      "kcal_per_100g": 150
+    },
+    "carrot_cake": {
+      "name_vi": "Bánh cà rốt",
+      "kcal_per_100g": 390
+    },
+    "ceviche": {
+      "name_vi": "Ceviche",
+      "kcal_per_100g": 100
+    },
+    "cheesecake": {
+      "name_vi": "Cheesecake",
+      "kcal_per_100g": 321
+    },
+    "cheese_plate": {
+      "name_vi": "Đĩa phô mai",
+      "kcal_per_100g": 350
+    },
+    "chicken_curry": {
+      "name_vi": "Cà ri gà",
+      "kcal_per_100g": 170
+    },
+    "chicken_quesadilla": {
+      "name_vi": "Quesadilla gà",
+      "kcal_per_100g": 240
+    },
+    "chicken_wings": {
+      "name_vi": "Cánh gà",
+      "kcal_per_100g": 266
+    },
+    "chocolate_cake": {
+      "name_vi": "Bánh chocolate",
+      "kcal_per_100g": 371
+    },
+    "chocolate_mousse": {
+      "name_vi": "Mousse chocolate",
+      "kcal_per_100g": 225
+    },
+    "churros": {
+      "name_vi": "Churros",
+      "kcal_per_100g": 370
+    },
+    "clam_chowder": {
+      "name_vi": "Súp nghêu",
+      "kcal_per_100g": 110
+    },
+    "club_sandwich": {
+      "name_vi": "Club sandwich",
+      "kcal_per_100g": 250
+    },
+    "crab_cakes": {
+      "name_vi": "Bánh cua",
+      "kcal_per_100g": 220
+    },
+    "creme_brulee": {
+      "name_vi": "Crème brûlée",
+      "kcal_per_100g": 330
+    },
+    "croque_madame": {
+      "name_vi": "Croque Madame",
+      "kcal_per_100g": 280
+    },
+    "cup_cakes": {
+      "name_vi": "Cupcake",
+      "kcal_per_100g": 350
+    },
+    "deviled_eggs": {
+      "name_vi": "Trứng nhồi",
+      "kcal_per_100g": 200
+    },
+    "donuts": {
+      "name_vi": "Donut",
+      "kcal_per_100g": 420
+    },
+    "dumplings": {
+      "name_vi": "Bánh dumpling",
+      "kcal_per_100g": 210
+    },
+    "edamame": {
+      "name_vi": "Đậu nành Edamame",
+      "kcal_per_100g": 121
+    },
+    "eggs_benedict": {
+      "name_vi": "Eggs Benedict",
+      "kcal_per_100g": 230
+    },
+    "escargots": {
+      "name_vi": "Ốc sên kiểu Pháp",
+      "kcal_per_100g": 180
+    },
+    "falafel": {
+      "name_vi": "Falafel",
+      "kcal_per_100g": 333
+    },
+    "filet_mignon": {
+      "name_vi": "Bò filet mignon",
+      "kcal_per_100g": 250
+    },
+    "fish_and_chips": {
+      "name_vi": "Cá và khoai tây chiên",
+      "kcal_per_100g": 240
+    },
+    "foie_gras": {
+      "name_vi": "Gan ngỗng",
+      "kcal_per_100g": 460
+    },
+    "french_fries": {
+      "name_vi": "Khoai tây chiên",
+      "kcal_per_100g": 312
+    },
+    "french_onion_soup": {
+      "name_vi": "Súp hành kiểu Pháp",
+      "kcal_per_100g": 85
+    },
+    "french_toast": {
+      "name_vi": "Bánh mì nướng kiểu Pháp",
+      "kcal_per_100g": 229
+    },
+    "fried_calamari": {
+      "name_vi": "Mực chiên",
+      "kcal_per_100g": 230
+    },
+    "fried_rice": {
+      "name_vi": "Cơm chiên",
+      "kcal_per_100g": 185
+    },
+    "frozen_yogurt": {
+      "name_vi": "Sữa chua đông lạnh",
+      "kcal_per_100g": 127
+    },
+    "garlic_bread": {
+      "name_vi": "Bánh mì bơ tỏi",
+      "kcal_per_100g": 350
+    },
+    "gnocchi": {
+      "name_vi": "Gnocchi",
+      "kcal_per_100g": 155
+    },
+    "greek_salad": {
+      "name_vi": "Salad Hy Lạp",
+      "kcal_per_100g": 120
+    },
+    "grilled_cheese_sandwich": {
+      "name_vi": "Sandwich phô mai nướng",
+      "kcal_per_100g": 330
+    },
+    "grilled_salmon": {
+      "name_vi": "Cá hồi nướng",
+      "kcal_per_100g": 206
+    },
+    "guacamole": {
+      "name_vi": "Guacamole",
+      "kcal_per_100g": 150
+    },
+    "gyoza": {
+      "name_vi": "Gyoza",
+      "kcal_per_100g": 200
+    },
+    "hamburger": {
+      "name_vi": "Hamburger",
+      "kcal_per_100g": 250
+    },
+    "hot_and_sour_soup": {
+      "name_vi": "Súp chua cay",
+      "kcal_per_100g": 45
+    },
+    "hot_dog": {
+      "name_vi": "Hot dog",
+      "kcal_per_100g": 290
+    },
+    "huevos_rancheros": {
+      "name_vi": "Huevos Rancheros",
+      "kcal_per_100g": 160
+    },
+    "hummus": {
+      "name_vi": "Hummus",
+      "kcal_per_100g": 166
+    },
+    "ice_cream": {
+      "name_vi": "Kem",
+      "kcal_per_100g": 207
+    },
+    "lasagna": {
+      "name_vi": "Lasagna",
+      "kcal_per_100g": 160
+    },
+    "lobster_bisque": {
+      "name_vi": "Súp tôm hùm",
+      "kcal_per_100g": 120
+    },
+    "lobster_roll_sandwich": {
+      "name_vi": "Sandwich tôm hùm",
+      "kcal_per_100g": 220
+    },
+    "macaroni_and_cheese": {
+      "name_vi": "Macaroni phô mai",
+      "kcal_per_100g": 180
+    },
+    "macarons": {
+      "name_vi": "Macaron",
+      "kcal_per_100g": 400
+    },
+    "miso_soup": {
+      "name_vi": "Súp Miso",
+      "kcal_per_100g": 40
+    },
+    "mussels": {
+      "name_vi": "Vẹm",
+      "kcal_per_100g": 172
+    },
+    "nachos": {
+      "name_vi": "Nachos",
+      "kcal_per_100g": 310
+    },
+    "omelette": {
+      "name_vi": "Trứng omelette",
+      "kcal_per_100g": 154
+    },
+    "onion_rings": {
+      "name_vi": "Hành tây chiên",
+      "kcal_per_100g": 332
+    },
+    "oysters": {
+      "name_vi": "Hàu",
+      "kcal_per_100g": 81
+    },
+    "pad_thai": {
+      "name_vi": "Pad Thai",
+      "kcal_per_100g": 175
+    },
+    "paella": {
+      "name_vi": "Paella",
+      "kcal_per_100g": 158
+    },
+    "pancakes": {
+      "name_vi": "Pancake",
+      "kcal_per_100g": 227
+    },
+    "panna_cotta": {
+      "name_vi": "Panna Cotta",
+      "kcal_per_100g": 240
+    },
+    "peking_duck": {
+      "name_vi": "Vịt quay Bắc Kinh",
+      "kcal_per_100g": 337
+    },
+    "pho": {
+      "name_vi": "Phở",
+      "kcal_per_100g": 85
+    },
+    "pizza": {
+      "name_vi": "Pizza",
+      "kcal_per_100g": 266
+    },
+    "pork_chop": {
+      "name_vi": "Sườn cốt lết heo",
+      "kcal_per_100g": 231
+    },
+    "poutine": {
+      "name_vi": "Poutine",
+      "kcal_per_100g": 250
+    },
+    "prime_rib": {
+      "name_vi": "Bò prime rib",
+      "kcal_per_100g": 290
+    },
+    "pulled_pork_sandwich": {
+      "name_vi": "Sandwich heo xé",
+      "kcal_per_100g": 260
+    },
+    "ramen": {
+      "name_vi": "Ramen",
+      "kcal_per_100g": 95
+    },
+    "ravioli": {
+      "name_vi": "Ravioli",
+      "kcal_per_100g": 175
+    },
+    "red_velvet_cake": {
+      "name_vi": "Bánh Red Velvet",
+      "kcal_per_100g": 370
+    },
+    "risotto": {
+      "name_vi": "Risotto",
+      "kcal_per_100g": 150
+    },
+    "samosa": {
+      "name_vi": "Samosa",
+      "kcal_per_100g": 262
+    },
+    "sashimi": {
+      "name_vi": "Sashimi",
+      "kcal_per_100g": 145
+    },
+    "scallops": {
+      "name_vi": "Sò điệp",
+      "kcal_per_100g": 111
+    },
+    "seaweed_salad": {
+      "name_vi": "Salad rong biển",
+      "kcal_per_100g": 90
+    },
+    "shrimp_and_grits": {
+      "name_vi": "Tôm và cháo ngô",
+      "kcal_per_100g": 150
+    },
+    "spaghetti_bolognese": {
+      "name_vi": "Spaghetti Bolognese",
+      "kcal_per_100g": 151
+    },
+    "spaghetti_carbonara": {
+      "name_vi": "Spaghetti Carbonara",
+      "kcal_per_100g": 220
+    },
+    "spring_rolls": {
+      "name_vi": "Chả giò / nem cuốn",
+      "kcal_per_100g": 190
+    },
+    "steak": {
+      "name_vi": "Bít tết",
+      "kcal_per_100g": 271
+    },
+    "strawberry_shortcake": {
+      "name_vi": "Bánh dâu",
+      "kcal_per_100g": 260
+    },
+    "sushi": {
+      "name_vi": "Sushi",
+      "kcal_per_100g": 150
+    },
+    "tacos": {
+      "name_vi": "Taco",
+      "kcal_per_100g": 226
+    },
+    "takoyaki": {
+      "name_vi": "Takoyaki",
+      "kcal_per_100g": 175
+    },
+    "tiramisu": {
+      "name_vi": "Tiramisu",
+      "kcal_per_100g": 283
+    },
+    "tuna_tartare": {
+      "name_vi": "Cá ngừ tartare",
+      "kcal_per_100g": 145
+    },
+    "waffles": {
+      "name_vi": "Waffle",
+      "kcal_per_100g": 291
+    }
+  }
+}

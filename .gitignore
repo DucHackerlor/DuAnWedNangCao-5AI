@@ -1,0 +1,38 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+web/node_modules/
+node_modules/
+
+# VS Code
+.vscode/
+
+# Environment / secrets
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+
+# Model/cache lớn
+*.safetensors
+*.bin
+
+# Dataset lớn
+data/flowers/
+data/coco128/
+data/gallery/
+
+# Model sinh ra khi train / index lớn
+artifacts/classifier/model.pt
+artifacts/detector/*.pt
+artifacts/retrieval/index.faiss

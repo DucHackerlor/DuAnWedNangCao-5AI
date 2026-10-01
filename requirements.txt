@@ -1,0 +1,12 @@
+# Backend (FastAPI + mô hình). Trên máy không có GPU nên cài torch bản CPU trước (xem Dockerfile)
+torch
+torchvision
+ultralytics>=8.3.0
+transformers>=4.56
+sentence-transformers>=3.0
+accelerate
+faiss-cpu
+fastapi>=0.115
+uvicorn[standard]
+python-multipart
+pillow

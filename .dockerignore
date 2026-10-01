@@ -1,0 +1,9 @@
+web/node_modules
+web/dist
+logs
+.pytest_cache
+**/__pycache__
+cloudflared
+*.zip
+data/flowers
+data/coco128
