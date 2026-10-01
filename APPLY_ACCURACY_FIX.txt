@@ -1,0 +1,19 @@
+CACH AP DUNG BAN SUA DO CHINH XAC
+
+1. Dung backend cu bang Ctrl+C.
+2. Giai nen patch.
+3. Copy TOAN BO noi dung patch vao thu muc project hien tai DuAnWedNangCao_beautiful.
+4. Chon Replace the files in the destination.
+5. KHONG xoa artifacts/, data/flowers/, data/coco128/, data/gallery/, web/node_modules/.
+6. Chay lai backend:
+   source ~/.venv/Scripts/activate
+   uvicorn api.main:app --reload
+7. Chay React:
+   cd web
+   npm run dev
+8. Test code:
+   ENABLED_MODELS= python -m pytest -q
+9. Test model/data local:
+   python verify_ai.py
+
+Luu y: YOLO mac dinh doi sang yolo11s.pt; lan dau co the tai weight moi.

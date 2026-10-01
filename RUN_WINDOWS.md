@@ -35,3 +35,17 @@ Sau khi backend và React đang chạy:
 2. Upload ảnh món ăn.
 3. Nhập khối lượng gram.
 4. Bấm **Ước tính calo**.
+
+## Kiểm tra chất lượng trước khi demo
+
+Sau khi đã có `data/flowers`, `data/coco128` và các artifact:
+
+```bash
+source ~/.venv/Scripts/activate
+python verify_ai.py
+```
+
+Mở `artifacts/verification_report.json` để xem kết quả từng AI. `WARN` không nhất thiết là lỗi chương trình; nó nghĩa là model/dataset cần xem lại thủ công.
+
+### Lưu ý YOLO11s
+Bản Accuracy Fix mặc định dùng `yolo11s.pt` để tăng độ chính xác so với `yolo11n.pt`. Lần chạy đầu Ultralytics có thể tải weight mới. Nếu máy quá yếu có thể quay về model nhẹ bằng biến môi trường `YOLO_WEIGHTS=artifacts/detector/yolo11n.pt`.

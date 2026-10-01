@@ -96,7 +96,7 @@ def prepare_datasets():
 
 
 def train_classifier():
-    print("\n=== BƯỚC B: TẠO AI PHÂN LOẠI HOA (RESNET-18) ===")
+    print("\n=== BƯỚC B: HUẤN LUYỆN PHÂN LOẠI HOA (RESNET-18, ACCURACY MODE) ===")
     print("Thiết bị:", DEVICE)
 
     import core.classifier as clf
@@ -106,183 +106,114 @@ def train_classifier():
     targets = np.array(base.targets)
     all_idx = np.arange(len(targets))
 
-    train_idx, tmp_idx = train_test_split(
-        all_idx,
-        test_size=0.2,
-        stratify=targets,
-        random_state=SEED,
-    )
-    val_idx, test_idx = train_test_split(
-        tmp_idx,
-        test_size=0.5,
-        stratify=targets[tmp_idx],
-        random_state=SEED,
-    )
+    train_idx, tmp_idx = train_test_split(all_idx, test_size=0.2, stratify=targets, random_state=SEED)
+    val_idx, test_idx = train_test_split(tmp_idx, test_size=0.5, stratify=targets[tmp_idx], random_state=SEED)
 
-    # Đúng FAST mode của notebook khi chạy CPU: 800 ảnh train, 1 epoch.
-    if DEVICE == "cpu":
-        train_idx = np.random.default_rng(SEED).choice(
-            train_idx,
-            size=min(800, len(train_idx)),
-            replace=False,
-        )
-        epochs = 1
-    else:
-        epochs = 5
+    # Không còn FAST mode 800 ảnh/1 epoch. Dùng toàn bộ train split để giảm sai số.
+    head_epochs = 2
+    finetune_epochs = 2 if DEVICE == "cpu" else 4
 
     train_ds = Subset(ImageFolder(FLOWERS_DIR, transform=clf.TRAIN_TF), train_idx)
     val_ds = Subset(ImageFolder(FLOWERS_DIR, transform=clf.EVAL_TF), val_idx)
     test_ds = Subset(ImageFolder(FLOWERS_DIR, transform=clf.EVAL_TF), test_idx)
 
-    # num_workers=0 ổn định hơn trên Windows.
     def loader(ds, shuffle):
-        return DataLoader(
-            ds,
-            batch_size=64,
-            shuffle=shuffle,
-            num_workers=0,
-            pin_memory=(DEVICE == "cuda"),
-        )
+        return DataLoader(ds, batch_size=64, shuffle=shuffle, num_workers=0, pin_memory=(DEVICE == "cuda"))
 
-    train_dl = loader(train_ds, True)
-    val_dl = loader(val_ds, False)
-    test_dl = loader(test_ds, False)
+    train_dl, val_dl, test_dl = loader(train_ds, True), loader(val_ds, False), loader(test_ds, False)
 
     out = ART_DIR / "classifier"
     out.mkdir(parents=True, exist_ok=True)
-    (out / "split.json").write_text(
-        json.dumps(
-            {
-                "train": train_idx.tolist(),
-                "val": val_idx.tolist(),
-                "test": test_idx.tolist(),
-            }
-        ),
-        encoding="utf-8",
-    )
+    (out / "split.json").write_text(json.dumps({
+        "train": train_idx.tolist(), "val": val_idx.tolist(), "test": test_idx.tolist()
+    }), encoding="utf-8")
 
-    print(
-        f"Lớp: {classes}\n"
-        f"train={len(train_ds)} · val={len(val_ds)} · test={len(test_ds)} · epochs={epochs}"
-    )
+    print(f"Lớp: {classes}\ntrain={len(train_ds)} · val={len(val_ds)} · test={len(test_ds)}")
 
-    model = clf.build_model(len(classes)).to(DEVICE)
-    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-4)
-    scheduler = torch.optim.lr_scheduler.OneCycleLR(
-        optimizer,
-        max_lr=1e-3,
-        total_steps=epochs * len(train_dl),
-    )
+    model = clf.build_model(len(classes), pretrained=True).to(DEVICE)
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.08)
     use_amp = DEVICE == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
-    def run_epoch(dl, train: bool):
+    def run_epoch(dl, train, optimizer=None):
         model.train(train)
-        total, correct, loss_sum = 0, 0, 0.0
-
+        total = correct = 0
+        loss_sum = 0.0
         for step, (x, y) in enumerate(dl, 1):
-            x = x.to(DEVICE, non_blocking=True)
-            y = y.to(DEVICE, non_blocking=True)
-
-            with torch.set_grad_enabled(train), torch.autocast(
-                device_type=DEVICE,
-                dtype=torch.float16,
-                enabled=use_amp,
-            ):
-                logits = model(x)
-                loss = criterion(logits, y)
-
+            x = x.to(DEVICE, non_blocking=True); y = y.to(DEVICE, non_blocking=True)
+            with torch.set_grad_enabled(train), torch.autocast(device_type=DEVICE, dtype=torch.float16, enabled=use_amp):
+                logits = model(x); loss = criterion(logits, y)
             if train:
                 optimizer.zero_grad(set_to_none=True)
-                scaler.scale(loss).backward()
-                scaler.step(optimizer)
-                scaler.update()
-                scheduler.step()
-
+                scaler.scale(loss).backward(); scaler.step(optimizer); scaler.update()
             loss_sum += loss.item() * len(y)
-            correct += (logits.argmax(1) == y).sum().item()
-            total += len(y)
-
-            if train and step % 5 == 0:
-                print(f"  train batch {step}/{len(dl)}")
-
+            correct += (logits.argmax(1) == y).sum().item(); total += len(y)
+            if train and step % 10 == 0:
+                print(f"  batch {step}/{len(dl)}")
         return loss_sum / total, correct / total
 
-    best_acc = 0.0
+    best_acc = -1.0
     history = []
 
-    for epoch in range(1, epochs + 1):
-        t0 = time.time()
-        tr_loss, tr_acc = run_epoch(train_dl, True)
+    # Phase 1: chỉ học classifier head để ổn định nhanh.
+    for param in model.parameters(): param.requires_grad = False
+    for param in model.fc.parameters(): param.requires_grad = True
+    optimizer = torch.optim.AdamW(model.fc.parameters(), lr=1e-3, weight_decay=1e-4)
+
+    epoch_no = 0
+    for _ in range(head_epochs):
+        epoch_no += 1; t0 = time.time()
+        tr_loss, tr_acc = run_epoch(train_dl, True, optimizer)
         va_loss, va_acc = run_epoch(val_dl, False)
-
-        history.append(
-            {
-                "epoch": epoch,
-                "train_loss": tr_loss,
-                "train_acc": tr_acc,
-                "val_loss": va_loss,
-                "val_acc": va_acc,
-            }
-        )
-
+        history.append({"epoch": epoch_no, "phase": "head", "train_loss": tr_loss, "train_acc": tr_acc, "val_loss": va_loss, "val_acc": va_acc})
         if va_acc > best_acc:
-            best_acc = va_acc
-            torch.save(model.state_dict(), out / "model.pt")
+            best_acc = va_acc; torch.save(model.state_dict(), out / "model.pt")
+        print(f"[HEAD {epoch_no}] train={tr_acc:.3f} · val={va_acc:.3f} · {time.time()-t0:.0f}s")
 
-        print(
-            f"[EPOCH {epoch}/{epochs}] "
-            f"train acc={tr_acc:.3f} · val acc={va_acc:.3f} · "
-            f"{time.time() - t0:.0f}s"
-        )
-
-    (out / "classes.json").write_text(
-        json.dumps(classes, ensure_ascii=False),
-        encoding="utf-8",
+    # Phase 2: fine-tune layer4 + fc với learning rate thấp.
+    for param in model.layer4.parameters(): param.requires_grad = True
+    for param in model.fc.parameters(): param.requires_grad = True
+    optimizer = torch.optim.AdamW(
+        [{"params": model.layer4.parameters(), "lr": 8e-5}, {"params": model.fc.parameters(), "lr": 2e-4}],
+        weight_decay=1e-4,
     )
 
-    # Test giống notebook.
-    model.load_state_dict(
-        torch.load(out / "model.pt", map_location=DEVICE, weights_only=True)
-    )
-    model.eval()
+    stale = 0
+    for _ in range(finetune_epochs):
+        epoch_no += 1; t0 = time.time()
+        tr_loss, tr_acc = run_epoch(train_dl, True, optimizer)
+        va_loss, va_acc = run_epoch(val_dl, False)
+        history.append({"epoch": epoch_no, "phase": "finetune", "train_loss": tr_loss, "train_acc": tr_acc, "val_loss": va_loss, "val_acc": va_acc})
+        if va_acc > best_acc + 1e-4:
+            best_acc = va_acc; stale = 0; torch.save(model.state_dict(), out / "model.pt")
+        else:
+            stale += 1
+        print(f"[FT {epoch_no}] train={tr_acc:.3f} · val={va_acc:.3f} · {time.time()-t0:.0f}s")
+        if stale >= 2:
+            print("Early stopping: val accuracy không cải thiện 2 epoch.")
+            break
+
+    (out / "classes.json").write_text(json.dumps(classes, ensure_ascii=False), encoding="utf-8")
+    model.load_state_dict(torch.load(out / "model.pt", map_location=DEVICE, weights_only=True)); model.eval()
     y_true, y_pred = [], []
-
     with torch.inference_mode():
         for x, y in test_dl:
-            y_pred += model(x.to(DEVICE)).argmax(1).cpu().tolist()
-            y_true += y.tolist()
+            y_pred += model(x.to(DEVICE)).argmax(1).cpu().tolist(); y_true += y.tolist()
 
     metrics = {
-        "test_accuracy": float(
-            np.mean(np.array(y_true) == np.array(y_pred))
-        ),
-        "test_macro_f1": float(
-            f1_score(y_true, y_pred, average="macro")
-        ),
-        "epochs": epochs,
-        "history": history,
-        "model": "resnet18-imagenet-finetune",
+        "test_accuracy": float(np.mean(np.array(y_true) == np.array(y_pred))),
+        "test_macro_f1": float(f1_score(y_true, y_pred, average="macro")),
+        "epochs": len(history), "history": history,
+        "model": "resnet18-imagenet-two-stage-finetune",
+        "train_samples": len(train_ds),
     }
-    (out / "metrics.json").write_text(
-        json.dumps(metrics, indent=2, ensure_ascii=False),
-        encoding="utf-8",
-    )
-
-    print("[OK] Đã tạo:")
-    print("    ", out / "model.pt")
-    print("    ", out / "classes.json")
-    print(
-        f"[KẾT QUẢ] test accuracy={metrics['test_accuracy']:.3f} · "
-        f"macro-F1={metrics['test_macro_f1']:.3f}"
-    )
+    (out / "metrics.json").write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
+    print("[OK]", out / "model.pt")
+    print(f"[KẾT QUẢ] test accuracy={metrics['test_accuracy']:.3f} · macro-F1={metrics['test_macro_f1']:.3f}")
 
     del model, train_dl, val_dl, test_dl
     gc.collect()
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-
+    if torch.cuda.is_available(): torch.cuda.empty_cache()
 
 def build_retrieval(coco_images):
     print("\n=== BƯỚC C: TẠO AI TÌM KIẾM ẢNH (CLIP + FAISS) ===")

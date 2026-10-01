@@ -1,214 +1,244 @@
 {
   "meta": {
     "unit": "kcal/100g",
-    "method": "CLIP zero-shot + kcal reference table",
+    "method": "CLIP zero-shot + food/non-food gate + user confirmation",
     "warning": "Kết quả chỉ là ước tính. Calo thực tế phụ thuộc nguyên liệu, dầu, sốt, cách chế biến và khẩu phần."
   },
   "foods": {
     "crab_dish": {
       "name_vi": "Cua / món cua",
       "kcal_per_100g": 170,
-      "prompt": "a photo of a cooked whole crab dish on a plate"
+      "concept": "cooked whole crab with shell"
     },
     "lobster_dish": {
       "name_vi": "Tôm hùm",
       "kcal_per_100g": 150,
-      "prompt": "a photo of a cooked lobster dish on a plate"
+      "concept": "cooked lobster"
     },
     "shrimp_dish": {
       "name_vi": "Tôm",
       "kcal_per_100g": 135,
-      "prompt": "a photo of a cooked shrimp or prawn dish"
+      "concept": "cooked shrimp or prawns"
     },
     "squid_dish": {
       "name_vi": "Mực",
       "kcal_per_100g": 150,
-      "prompt": "a photo of a cooked squid or calamari dish"
+      "concept": "cooked squid or calamari"
     },
     "shellfish_dish": {
       "name_vi": "Hải sản có vỏ",
       "kcal_per_100g": 130,
-      "prompt": "a photo of cooked shellfish, clams, mussels or oysters"
+      "concept": "cooked shellfish, clams, mussels or oysters"
     },
     "fish_dish": {
       "name_vi": "Cá",
       "kcal_per_100g": 160,
-      "prompt": "a photo of a cooked fish dish"
+      "concept": "cooked fish"
     },
     "salmon": {
       "name_vi": "Cá hồi",
       "kcal_per_100g": 206,
-      "prompt": "a photo of cooked salmon"
+      "concept": "cooked salmon"
     },
     "peking_duck": {
       "name_vi": "Vịt quay",
       "kcal_per_100g": 337,
-      "prompt": "a photo of roasted duck or peking duck"
+      "concept": "roasted duck"
     },
     "chicken": {
       "name_vi": "Thịt gà",
       "kcal_per_100g": 215,
-      "prompt": "a photo of a cooked chicken dish"
+      "concept": "cooked chicken"
     },
     "fried_chicken": {
       "name_vi": "Gà rán",
       "kcal_per_100g": 260,
-      "prompt": "a photo of fried chicken"
+      "concept": "fried chicken"
     },
     "beef": {
       "name_vi": "Thịt bò",
       "kcal_per_100g": 250,
-      "prompt": "a photo of a cooked beef dish"
+      "concept": "cooked beef"
     },
     "steak": {
       "name_vi": "Bít tết",
       "kcal_per_100g": 271,
-      "prompt": "a photo of steak on a plate"
+      "concept": "steak"
     },
     "pork": {
       "name_vi": "Thịt heo",
       "kcal_per_100g": 242,
-      "prompt": "a photo of a cooked pork dish"
+      "concept": "cooked pork"
     },
     "rice": {
       "name_vi": "Cơm trắng",
       "kcal_per_100g": 130,
-      "prompt": "a photo of plain cooked white rice"
+      "concept": "plain cooked white rice"
     },
     "fried_rice": {
       "name_vi": "Cơm chiên",
       "kcal_per_100g": 185,
-      "prompt": "a photo of fried rice"
+      "concept": "fried rice"
     },
     "bibimbap": {
       "name_vi": "Cơm trộn",
       "kcal_per_100g": 145,
-      "prompt": "a photo of bibimbap mixed rice"
+      "concept": "bibimbap mixed rice"
     },
     "pho": {
       "name_vi": "Phở",
       "kcal_per_100g": 85,
-      "prompt": "a photo of Vietnamese pho noodle soup"
+      "concept": "Vietnamese pho noodle soup"
     },
     "noodle_soup": {
       "name_vi": "Mì nước",
       "kcal_per_100g": 95,
-      "prompt": "a photo of noodle soup"
+      "concept": "noodle soup"
     },
     "ramen": {
       "name_vi": "Ramen",
       "kcal_per_100g": 95,
-      "prompt": "a photo of ramen noodle soup"
+      "concept": "ramen noodle soup"
     },
     "stir_fried_noodles": {
       "name_vi": "Mì xào",
       "kcal_per_100g": 180,
-      "prompt": "a photo of stir fried noodles"
+      "concept": "stir fried noodles"
     },
     "pasta": {
       "name_vi": "Mì Ý",
       "kcal_per_100g": 165,
-      "prompt": "a photo of pasta or spaghetti"
+      "concept": "pasta or spaghetti"
     },
     "pizza": {
       "name_vi": "Pizza",
       "kcal_per_100g": 266,
-      "prompt": "a photo of pizza"
+      "concept": "pizza"
     },
     "hamburger": {
       "name_vi": "Hamburger",
       "kcal_per_100g": 250,
-      "prompt": "a photo of a hamburger"
+      "concept": "hamburger"
     },
     "sandwich": {
       "name_vi": "Sandwich",
       "kcal_per_100g": 240,
-      "prompt": "a photo of a sandwich"
+      "concept": "sandwich"
+    },
+    "hot_dog": {
+      "name_vi": "Hot dog",
+      "kcal_per_100g": 290,
+      "concept": "hot dog"
     },
     "french_fries": {
       "name_vi": "Khoai tây chiên",
       "kcal_per_100g": 312,
-      "prompt": "a photo of french fries"
+      "concept": "french fries"
     },
     "salad": {
       "name_vi": "Salad",
       "kcal_per_100g": 110,
-      "prompt": "a photo of a vegetable salad"
+      "concept": "vegetable salad"
     },
     "vegetables": {
       "name_vi": "Rau củ",
       "kcal_per_100g": 70,
-      "prompt": "a photo of cooked vegetables"
+      "concept": "cooked vegetables"
+    },
+    "broccoli": {
+      "name_vi": "Bông cải xanh",
+      "kcal_per_100g": 35,
+      "concept": "broccoli"
+    },
+    "carrot": {
+      "name_vi": "Cà rốt",
+      "kcal_per_100g": 41,
+      "concept": "carrot"
     },
     "soup": {
       "name_vi": "Súp",
       "kcal_per_100g": 75,
-      "prompt": "a photo of soup"
+      "concept": "soup"
     },
     "curry": {
       "name_vi": "Cà ri",
       "kcal_per_100g": 170,
-      "prompt": "a photo of curry"
+      "concept": "curry"
     },
     "dumplings": {
       "name_vi": "Bánh bao / há cảo",
       "kcal_per_100g": 210,
-      "prompt": "a photo of dumplings"
+      "concept": "dumplings"
     },
     "spring_rolls": {
       "name_vi": "Nem / chả giò",
       "kcal_per_100g": 190,
-      "prompt": "a photo of spring rolls"
+      "concept": "spring rolls"
     },
     "sushi": {
       "name_vi": "Sushi",
       "kcal_per_100g": 150,
-      "prompt": "a photo of sushi"
+      "concept": "sushi"
     },
     "sashimi": {
       "name_vi": "Sashimi",
       "kcal_per_100g": 145,
-      "prompt": "a photo of sashimi"
+      "concept": "sashimi"
     },
     "egg": {
       "name_vi": "Trứng",
       "kcal_per_100g": 155,
-      "prompt": "a photo of cooked eggs or omelette"
+      "concept": "cooked eggs or omelette"
     },
     "bread": {
       "name_vi": "Bánh mì",
       "kcal_per_100g": 265,
-      "prompt": "a photo of bread"
+      "concept": "bread"
     },
     "pancakes": {
       "name_vi": "Pancake",
       "kcal_per_100g": 227,
-      "prompt": "a photo of pancakes"
+      "concept": "pancakes"
     },
     "waffles": {
       "name_vi": "Waffle",
       "kcal_per_100g": 291,
-      "prompt": "a photo of waffles"
+      "concept": "waffles"
     },
     "cake": {
       "name_vi": "Bánh ngọt",
       "kcal_per_100g": 360,
-      "prompt": "a photo of cake"
+      "concept": "cake"
     },
     "donut": {
       "name_vi": "Donut",
       "kcal_per_100g": 420,
-      "prompt": "a photo of donuts"
+      "concept": "donuts"
     },
     "ice_cream": {
       "name_vi": "Kem",
       "kcal_per_100g": 207,
-      "prompt": "a photo of ice cream"
+      "concept": "ice cream"
+    },
+    "banana": {
+      "name_vi": "Chuối",
+      "kcal_per_100g": 89,
+      "concept": "banana"
+    },
+    "apple": {
+      "name_vi": "Táo",
+      "kcal_per_100g": 52,
+      "concept": "apple"
+    },
+    "orange": {
+      "name_vi": "Cam",
+      "kcal_per_100g": 47,
+      "concept": "orange fruit"
     },
     "fruit": {
       "name_vi": "Trái cây",
       "kcal_per_100g": 60,
-      "prompt": "a photo of fresh fruit"
+      "concept": "fresh fruit"
     }
   }
 }

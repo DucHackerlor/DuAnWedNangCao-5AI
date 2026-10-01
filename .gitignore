@@ -36,3 +36,5 @@ data/gallery/
 artifacts/classifier/model.pt
 artifacts/detector/*.pt
 artifacts/retrieval/index.faiss
+yolo11s.pt
+image.png
