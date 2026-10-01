@@ -7,11 +7,11 @@ import Chat from './features/Chat.jsx';
 import Calories from './features/Calories.jsx';
 
 const TABS = [
-  { id: 'classify', icon: '✿', label: 'Phân loại hoa', model: 'classifier', desc: 'ResNet-18', Component: Classify },
-  { id: 'detect', icon: '⌖', label: 'Nhận diện', model: 'detector', desc: 'YOLO11n', Component: Detect },
+  { id: 'classify', icon: '✿', label: 'Phân loại hoa', model: 'classifier', desc: 'ResNet-18 + CLIP', Component: Classify },
+  { id: 'detect', icon: '⌖', label: 'Nhận diện', model: 'detector', desc: 'YOLO11s + retry', Component: Detect },
   { id: 'search', icon: '⌕', label: 'Tìm kiếm ảnh', model: 'retrieval', desc: 'CLIP + FAISS', Component: Search },
   { id: 'chat', icon: '✦', label: 'Trợ lý AI', model: 'llm', desc: 'RAG + Qwen', Component: Chat },
-  { id: 'calorie', icon: '◉', label: 'Đo calo', model: 'calorie', desc: 'Food-101 + kcal', Component: Calories },
+  { id: 'calorie', icon: '◉', label: 'Đo calo', model: 'calorie', desc: 'CLIP food + kcal', Component: Calories },
 ];
 
 export default function App() {

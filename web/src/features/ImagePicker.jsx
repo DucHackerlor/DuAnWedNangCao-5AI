@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
 
-// Chọn ảnh + xem trước. Giải phóng object URL khi đổi ảnh để tránh rò bộ nhớ.
-export default function ImagePicker({ onChange, label = 'Chọn ảnh' }) {
+export default function ImagePicker({ onChange, label = 'Chọn ảnh', disabled = false }) {
   const [preview, setPreview] = useState(null);
   useEffect(() => () => preview && URL.revokeObjectURL(preview), [preview]);
 
+  function pick(file) {
+    if (!file || disabled) return;
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview(URL.createObjectURL(file));
+    onChange(file);
+  }
+
   return (
-    <div className="picker">
+    <div className={`picker ${disabled ? 'disabled' : ''}`}>
       <label className="button">
         {label}
-        <input type="file" accept="image/*" hidden onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (!file) return;
-          setPreview(URL.createObjectURL(file));
-          onChange(file);
-        }} />
+        <input type="file" accept="image/jpeg,image/png,image/webp" hidden disabled={disabled}
+               onChange={(e) => pick(e.target.files?.[0])} />
       </label>
       {preview && <img src={preview} alt="Ảnh đầu vào" className="preview" />}
     </div>

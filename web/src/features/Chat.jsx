@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { streamChat } from '../api.js';
 
-export default function Chat() {
+export default function Chat({ disabled = false }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
@@ -10,8 +10,8 @@ export default function Chat() {
   async function send(e) {
     e.preventDefault();
     const text = input.trim();
-    if (!text || busy) return;
-    const history = messages.map(({ role, content }) => ({ role, content }));
+    if (!text || busy || disabled) return;
+    const history = messages.slice(-8).map(({ role, content }) => ({ role, content }));
     setMessages((m) => [...m, { role: 'user', content: text }, { role: 'assistant', content: '', sources: [] }]);
     setInput('');
     setBusy(true);
@@ -35,24 +35,25 @@ export default function Chat() {
   return (
     <section className="chat">
       <h2>Trợ lý ShopLite (RAG)</h2>
-      <p className="muted">Bạn đang trò chuyện với AI. Câu trả lời dựa trên tài liệu chính sách và có thể sai.</p>
+      <p className="muted">AI chỉ trả lời khi tài liệu nội bộ có đoạn đủ liên quan. Câu ngoài phạm vi sẽ được từ chối thay vì đoán.</p>
       <div className="messages" aria-live="polite">
+        {messages.length === 0 && <div className="emptyBox">Thử hỏi: “Đổi trả trong bao lâu?” hoặc “Phí giao hàng thế nào?”</div>}
         {messages.map((m, i) => (
           <div key={i} className={`msg ${m.role}`}>
             <p>{m.content || (busy && i === messages.length - 1 ? '…' : '')}</p>
             {m.sources?.length > 0 && (
               <details><summary>Nguồn ({m.sources.length})</summary>
-                {m.sources.map((s, j) => <p key={j} className="muted"><b>{s.source}</b> · {s.score}: {s.text.slice(0, 160)}…</p>)}
+                {m.sources.map((s, j) => <p key={j} className="muted"><b>{s.source}</b> · {s.score}: {s.text.slice(0, 180)}…</p>)}
               </details>
             )}
           </div>
         ))}
       </div>
       <form className="row" onSubmit={send}>
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Đổi trả trong bao lâu?" aria-label="Câu hỏi" />
+        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Đổi trả trong bao lâu?" aria-label="Câu hỏi" disabled={disabled || busy} />
         {busy
           ? <button type="button" className="button" onClick={() => abortRef.current?.abort()}>Dừng</button>
-          : <button type="submit" className="button">Gửi</button>}
+          : <button type="submit" className="button" disabled={disabled || !input.trim()}>Gửi</button>}
       </form>
     </section>
   );
